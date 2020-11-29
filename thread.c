@@ -20,7 +20,7 @@ void input(char*argv[]){
 
 	while(num++ < 1000){
 		struct Ret ret2 = radamsa(0, args);
-		if(ret.len > 10000)
+		if(ret2.len > 10000)
 			continue;
 		printf("\n\n\n\n");
 		write(1, ret2.input, ret2.len);//ret2.input버퍼 포인터에 ret2.len의 바이트 수만큼
@@ -47,9 +47,9 @@ void input(char*argv[]){
 			error++;
 			// save input file
 			char path[100]; 
-			sprintf(path, "./%s/%d", argv[3], num);
-			FILE*fp = fopen(path,"a+");
-			fwrite(buf, sizeof(buf),1,fp);
+			sprintf(path, "./%s/%d", argv[3], num); // path 배열에 ./argv[3]num 저장 
+			FILE*fp = fopen(path,"a+"); //path파일을 a+모드로 열기
+			fwrite(buf, sizeof(buf),1,fp); // buf에 sizeof(buf)바이트를 한번만 파일에 쓰겠다.
 			fclose(fp);
 		}else{
 			printf("good\n");
@@ -70,7 +70,7 @@ int main(int nargs, char*argv[]){
 
 	pthread_t thread_t;
 	int status;
-	if (pthread_create(&thread_t, NULL, input, argv) < 0)
+	if (pthread_create(&thread_t, NULL, input, argv) < 0) //쓰레드 생성
 	{
 		perror("thread create error:");
 		exit(0);
