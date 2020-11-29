@@ -36,11 +36,11 @@ void input(char*argv[]){
 			}
 		}
 		printf("\n");
-		sprintf(cmd, "python -c \'print \"%s\"\' | %s", buf ,argv[1]);
+		sprintf(cmd, "python -c \'print \"%s\"\' | %s", buf ,argv[1]); //buf주소, argv[1]가 파이썬 실행하도록 cmd에 저장
 		printf("[+] cmd : %s\n",cmd);
-		int result = system(cmd);
+		int result = system(cmd); //cmd 프로세스 호출하여 실행 후 종료
 		printf("[+] Program Terminated\n");
-		printf("[+] result: %d/n", result);
+		printf("[+] result: %d/n", result); //cmd 결과값 출력
 		if( result != 0)
 		{
 			printf("error!\n");
@@ -48,7 +48,7 @@ void input(char*argv[]){
 			// save input file
 			char path[100]; 
 			sprintf(path, "./%s/%d", argv[3], num); // path 배열에 ./argv[3]num 저장 
-			FILE*fp = fopen(path,"a+"); //path파일을 a+모드로 열기
+			FILE *fp = fopen(path,"a+"); //path파일을 a+모드로 열기
 			fwrite(buf, sizeof(buf),1,fp); // buf에 sizeof(buf)바이트를 한번만 파일에 쓰겠다.
 			fclose(fp);
 		}else{
@@ -68,15 +68,15 @@ int main(int nargs, char*argv[]){
 	}
 	printf("[+] Start Dumb Fuzzing....\n");
 
-	pthread_t thread_t;
+	pthread_t thread_t; //thread_t 정의?
 	int status;
-	if (pthread_create(&thread_t, NULL, input, argv) < 0) //쓰레드 생성
+	if (pthread_create(&thread_t, NULL, input, argv) < 0) // 스레드 생성 ; 스레드 속성을 기본으로 하고 input에 argv 인자가 전달
 	{
 		perror("thread create error:");
 		exit(0);
 	}
 
-	pthread_join(thread_t, (void **)&status);
-	printf("Thread End %d\n", status);
+	pthread_join(thread_t, (void **)&status); // input함수가 끝날때까지 main에서 기다릴 스레드 tread_t와 리턴값 void**&status
+	printf("Thread End %d\n", status); 
 	return 1;
 }
